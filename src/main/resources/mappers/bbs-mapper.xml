@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.announce">
+    <select id="selectAnnounces" resultType="kr.re.kitri.isrealboot2.model.AnnouncePost">
+        SELECT post_seq, title, writer, hps, recommend_num, DATE_FORMAT(post_date, '%Y-%m-%d') AS 'date_formatted'
+        FROM announce_post ORDER BY post_seq DESC;;
+    </select>
+
+    <select id="selectAnnounceBySeq" parameterType="int" resultType="kr.re.kitri.isrealboot2.model.AnnouncePost">
+        SELECT post_seq, title, writer, hps, recommend_num, contents, DATE_FORMAT(post_date, '%Y-%m-%d') AS 'date_formatted'
+        FROM announce_post
+        WHERE post_seq = #{post_seq};
+    </select>
+
+    <insert id="insertAnnounce" parameterType="kr.re.kitri.isrealboot2.model.AnnouncePost">
+        INSERT INTO announce_post (title, writer, post_date, contents)
+        VALUES (#{title}, #{writer}, now(), #{contents});
+    </insert>
+
+</mapper>
