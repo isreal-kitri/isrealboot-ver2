@@ -5,7 +5,7 @@
 <mapper namespace="mappers.announce">
     <select id="selectAnnounces" resultType="kr.re.kitri.isrealboot2.model.AnnouncePost">
         SELECT post_seq, title, writer, hps, recommend_num, DATE_FORMAT(post_date, '%Y-%m-%d') AS 'date_formatted'
-        FROM announce_post ORDER BY post_seq DESC;;
+        FROM announce_post ORDER BY post_seq DESC;
     </select>
 
     <select id="selectAnnounceBySeq" parameterType="int" resultType="kr.re.kitri.isrealboot2.model.AnnouncePost">
@@ -18,5 +18,21 @@
         INSERT INTO announce_post (title, writer, post_date, contents)
         VALUES (#{title}, #{writer}, now(), #{contents});
     </insert>
+    
+    <update id="updateHps" parameterType="int">
+        UPDATE announce_post SET hps = hps + 1
+        WHERE post_seq = #{post_seq};
+    </update>
+
+    <select id="selectTop4Announces" resultType="kr.re.kitri.isrealboot2.model.AnnouncePost">
+        SELECT post_seq, title, writer, hps
+        FROM announce_post
+        ORDER BY hps DESC
+        LIMIT 4;
+    </select>
+
+    <select id="joinMtDetail" parameterType="int" resultType="kr.re.kitri.isrealboot2.model.MountainDetail">
+        SELECT * FROM mountain_detail WHERE mt_index = #{mt_index};
+    </select>
 
 </mapper>

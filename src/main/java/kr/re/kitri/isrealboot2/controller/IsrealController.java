@@ -20,28 +20,35 @@ public class IsrealController {
      *  전체 공지사항 보기
      */
     @GetMapping("/announce")
-    public List<AnnouncePost> heroes() {
-        System.out.println("공지사항 읽기 테스트");
+    public List<AnnouncePost> announces() {
         return this.isrealService.getAnnounces();
     }
 
     /**
+     *  조회수 기준 Top4 공지사항 리스트
+     */
+    @GetMapping("/announce/top4")
+    public List<AnnouncePost> top4announces() {
+        return this.isrealService.getTop4Announces();
+    }
+
+    /**
      *  공지사항 보기
+     *  공지사항 조회수 업데이트(클릭 이벤트 발생 시)
      */
     @GetMapping("/announce/{post_seq}")
     public AnnouncePost announceDetail(@PathVariable int post_seq) {
-        System.out.println("공지사항 detail 확인");
+        isrealService.updateHitPerSec(post_seq);
         return isrealService.getAnnounce(post_seq);
     }
 
     /**
      *  공지사항 등록
      */
-    @PostMapping("/announce")
+    @PostMapping("/announce/regist")
     public void registAnn(@RequestBody AnnouncePost announcePost) {
-        System.out.println("check..");
-        System.out.println(announcePost);
-
+        System.out.println("check log...............................................");
         isrealService.registAnnounce(announcePost);
     }
+
 }

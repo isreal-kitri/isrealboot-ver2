@@ -2,6 +2,7 @@ package kr.re.kitri.isrealboot2.service;
 
 import kr.re.kitri.isrealboot2.dao.BbsDao;
 import kr.re.kitri.isrealboot2.model.AnnouncePost;
+import kr.re.kitri.isrealboot2.model.MountainDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,4 +25,14 @@ public class IsrealService {
     public void registAnnounce(AnnouncePost announcePost) {
         this.bbsDao.insertAnnounce(announcePost);
     }
+
+    public void updateHitPerSec(int seq) {
+        this.bbsDao.updateHps(seq);
+    }
+
+    public List<AnnouncePost> getTop4Announces() {
+        return this.bbsDao.select4Announces();
+    }
+
+
 }
