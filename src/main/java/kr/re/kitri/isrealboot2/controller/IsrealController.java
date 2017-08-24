@@ -1,7 +1,8 @@
 package kr.re.kitri.isrealboot2.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.re.kitri.isrealboot2.model.AnnouncePost;
+import kr.re.kitri.isrealboot2.model.MountainDetail;
+import kr.re.kitri.isrealboot2.model.WeatherDetail;
 import kr.re.kitri.isrealboot2.service.IsrealService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -47,8 +48,25 @@ public class IsrealController {
      */
     @PostMapping("/announce/regist")
     public void registAnn(@RequestBody AnnouncePost announcePost) {
-        System.out.println("check log...............................................");
         isrealService.registAnnounce(announcePost);
+    }
+
+    /**
+     *  산 상세보기
+     */
+    @GetMapping("/main/{mt_index}")
+    public MountainDetail mountainDetail(@PathVariable int mt_index) {
+        return isrealService.getMtDetail(mt_index);
+    }
+
+    /**
+     *  날씨 정보 상세 보기
+     */
+    @GetMapping("/weather/{mt_index}")
+    public WeatherDetail weatherDetail(@PathVariable int mt_index) {
+        System.out.println("checke.........");
+        System.out.println(mt_index);
+        return isrealService.getWeatherDetail(mt_index);
     }
 
 }

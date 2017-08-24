@@ -3,6 +3,7 @@ package kr.re.kitri.isrealboot2;
 import kr.re.kitri.isrealboot2.dao.BbsDao;
 import kr.re.kitri.isrealboot2.model.AnnouncePost;
 import kr.re.kitri.isrealboot2.model.MountainDetail;
+import kr.re.kitri.isrealboot2.model.WeatherDetail;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,4 +64,12 @@ public class Isrealboot2ApplicationTests {
 		System.out.println(temp);
 	}
 
+	@Test
+	public void selectWeatherDetailTest() {
+		WeatherDetail temp = bbsDao.selectWeatherDetail(0);
+		System.out.println(temp);
+	}
+
 }
+
+

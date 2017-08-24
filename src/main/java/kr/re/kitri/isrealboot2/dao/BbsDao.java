@@ -2,6 +2,7 @@ package kr.re.kitri.isrealboot2.dao;
 
 import kr.re.kitri.isrealboot2.model.AnnouncePost;
 import kr.re.kitri.isrealboot2.model.MountainDetail;
+import kr.re.kitri.isrealboot2.model.WeatherDetail;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -36,6 +37,10 @@ public class BbsDao {
 
     public MountainDetail selectMtDetail(int index) {
         return sqlSession.selectOne("mappers.announce.joinMtDetail", index);
+    }
+
+    public WeatherDetail selectWeatherDetail(int index) {
+        return sqlSession.selectOne("mappers.announce.joinWeatherDetail", index);
     }
 
 }

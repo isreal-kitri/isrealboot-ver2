@@ -4,35 +4,46 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mappers.announce">
     <select id="selectAnnounces" resultType="kr.re.kitri.isrealboot2.model.AnnouncePost">
-        SELECT post_seq, title, writer, hps, recommend_num, DATE_FORMAT(post_date, '%Y-%m-%d') AS 'date_formatted'
-        FROM announce_post ORDER BY post_seq DESC;
+        SELECT  post_seq, title, writer, hps, recommend_num, DATE_FORMAT(post_date, '%Y-%m-%d') AS 'date_formatted'
+        FROM    announce_post ORDER BY post_seq DESC;
     </select>
 
     <select id="selectAnnounceBySeq" parameterType="int" resultType="kr.re.kitri.isrealboot2.model.AnnouncePost">
-        SELECT post_seq, title, writer, hps, recommend_num, contents, DATE_FORMAT(post_date, '%Y-%m-%d') AS 'date_formatted'
-        FROM announce_post
-        WHERE post_seq = #{post_seq};
+        SELECT  post_seq, title, writer, hps, recommend_num, contents, DATE_FORMAT(post_date, '%Y-%m-%d') AS 'date_formatted'
+        FROM    announce_post
+        WHERE   post_seq = #{post_seq};
     </select>
 
     <insert id="insertAnnounce" parameterType="kr.re.kitri.isrealboot2.model.AnnouncePost">
-        INSERT INTO announce_post (title, writer, post_date, contents)
-        VALUES (#{title}, #{writer}, now(), #{contents});
+        INSERT INTO   announce_post (title, writer, post_date, contents)
+        VALUES        (#{title}, #{writer}, now(), #{contents});
     </insert>
     
     <update id="updateHps" parameterType="int">
-        UPDATE announce_post SET hps = hps + 1
-        WHERE post_seq = #{post_seq};
+        UPDATE  announce_post SET hps = hps + 1
+        WHERE   post_seq = #{post_seq};
     </update>
 
     <select id="selectTop4Announces" resultType="kr.re.kitri.isrealboot2.model.AnnouncePost">
-        SELECT post_seq, title, writer, hps
-        FROM announce_post
-        ORDER BY hps DESC
+        SELECT    post_seq, title, writer, hps
+        FROM      announce_post
+        ORDER BY  hps DESC
         LIMIT 4;
     </select>
 
     <select id="joinMtDetail" parameterType="int" resultType="kr.re.kitri.isrealboot2.model.MountainDetail">
-        SELECT * FROM mountain_detail WHERE mt_index = #{mt_index};
+        SELECT  mountain_detail.lat_zoom, mountain_detail.lng_zoom, mountain_detail.mount_name,
+                mtname.altitude, mtname.top100_fm_sel_reason, mtname.mnt_infor, mtname.transport
+        FROM    mountain_detail, mtname
+        WHERE   mountain_detail.mount_name = mtname.mount_name
+        AND     mountain_detail.mt_index = #{mt_index};
+    </select>
+
+    <select id="joinWeatherDetail" parameterType="int" resultType="kr.re.kitri.isrealboot2.model.WeatherDetail">
+        SELECT  mountain_detail.mount_name, name.temp_avg, name.rainfall, name.humidity_avg, name.ws_avg
+        FROM    mountain_detail, name
+        WHERE   mountain_detail.mount_name = name.mount_name
+        AND     mountain_detail.mt_index = #{mt_index};
     </select>
 
 </mapper>

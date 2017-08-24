@@ -3,6 +3,7 @@ package kr.re.kitri.isrealboot2.service;
 import kr.re.kitri.isrealboot2.dao.BbsDao;
 import kr.re.kitri.isrealboot2.model.AnnouncePost;
 import kr.re.kitri.isrealboot2.model.MountainDetail;
+import kr.re.kitri.isrealboot2.model.WeatherDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +35,11 @@ public class IsrealService {
         return this.bbsDao.select4Announces();
     }
 
+    public MountainDetail getMtDetail(int index) {
+        return bbsDao.selectMtDetail(index);
+    }
 
+    public WeatherDetail getWeatherDetail(int index) {
+        return bbsDao.selectWeatherDetail(index);
+    }
 }
